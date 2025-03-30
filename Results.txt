@@ -1,0 +1,71 @@
+Sales Prediction Model Results
+=============================
+
+Dataset Overview
+----------------
+- Total Entries: 500
+- Columns: 9
+  - Features: customer name, customer e-mail, country, gender, age, annual Salary, credit card debt, net worth
+  - Target: car purchase amount
+- Data Types:
+  - Float64: age, annual Salary, credit card debt, net worth, car purchase amount
+  - Int64: gender
+  - Object: customer name, customer e-mail, country
+- Memory Usage: 35.3+ KB
+- Missing Values: None
+
+Sample Data (First 5 Rows)
+--------------------------
+- Martina Avila: net worth = 238961.25, car purchase amount = 35321.46
+- Harlan Barnes: net worth = 530973.91, car purchase amount = 45115.53
+- Naomi Rodriquez: net worth = 638467.18, car purchase amount = 42925.71
+- Jade Cunningham: net worth = 548599.05, car purchase amount = 67422.36
+- Cedric Leach: net worth = 560304.07, car purchase amount = 55915.46
+
+Preprocessing
+-------------
+- Dropped: customer name, customer e-mail
+- Encoded: country, gender (LabelEncoder)
+- Scaled: Numerical features (StandardScaler)
+- Feature Engineering: Added interaction term (annual Salary × net worth)
+
+Customer Segmentation (K-means, 3 Clusters)
+-------------------------------------------
+- Cluster 0: 137 customers
+- Cluster 1: 163 customers
+- Cluster 2: 200 customers
+
+Model Performance
+-----------------
+1. Linear Regression
+   - Mean Squared Error (MSE): 2.10
+   - R² Score: 1.00 (Perfect fit, possibly overfitting or data issue)
+   
+2. Random Forest Regressor
+   - Mean Squared Error (MSE): 3,966,716.96
+   - R² Score: 0.96 (Explains 96% of variance)
+   - Cross-Validation R² Scores: [0.9546, 0.9583, 0.9556, 0.9584, 0.9555]
+   - Average CV R²: 0.96 ± 0.00 (Highly consistent)
+
+Feature Importance (Random Forest)
+---------------------------------
+1. salary_networth_interaction: 0.4183 (41.83%)
+2. age: 0.3745 (37.45%)
+3. annual Salary: 0.1786 (17.86%)
+4. net worth: 0.0144 (1.44%)
+5. credit card debt: 0.0072 (0.72%)
+6. country: 0.0058 (0.58%)
+7. gender: 0.0013 (0.13%)
+
+Key Insights
+------------
+- Random Forest outperforms Linear Regression with R² = 0.96 and lower MSE.
+- Top predictors: salary_networth_interaction (41.83%), age (37.45%), annual Salary (17.86%).
+- Linear Regression R² = 1.00 suggests potential overfitting or data leakage; investigate further.
+- Customer segmentation reveals 3 distinct groups, with Cluster 2 being the largest (200 customers).
+
+Recommendations
+---------------
+- Validate Linear Regression results (R² = 1.00 is suspicious).
+- Use Random Forest as the primary model due to high accuracy and consistency.
+- Focus marketing efforts on age and income-related factors, as they drive predictions.
